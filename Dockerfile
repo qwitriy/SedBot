@@ -19,6 +19,7 @@ RUN apt-get -y install wget && apt-get install -y ruby-full && ruby -v
 # RUN apt-get install imagemagick -y
 
 # # Install ImageMagick with WEBP and HEIC support
+FROM ubuntu:latest
 ARG IMAGEMAGICK_VERSION=7.1.0-47
 RUN wget https://github.com/ImageMagick/ImageMagick/archive/refs/tags/${IMAGEMAGICK_VERSION}.tar.gz 
 #https://download.imagemagick.org/ImageMagick/download/releases/ImageMagick-7.1.0-31.tar.gz
@@ -35,5 +36,5 @@ RUN identify --version
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 WORKDIR /app
 COPY --from=build /app .
-
-ENTRYPOINT ["./SedBot", "5421263708:AAE8ayh8aqDEvVWC626CBBINjUudveOMApg"]
+ARG BOT_TOKEN
+ENTRYPOINT ["./SedBot", "${BOT_TOKEN}"]
